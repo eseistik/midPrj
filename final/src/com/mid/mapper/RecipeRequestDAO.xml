@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.IRecipeRequestDAO">
+
+	<select id="recipeRequestList" resultType="com.mid.dto.RecipeRequestDTO">
+		SELECT *
+		FROM RR_LIST_VIEW
+	</select>
+	
+	<select id="recipeRequestStu" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM SELECTION JOIN RR_CO
+		ON SELECTION.RR_CO_ID = RR_CO.RR_CO_ID
+		WHERE RR_ID = #{rr_id }
+	</select>
+	
+	<select id="recipeRequestCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM RR_LIST_VIEW
+	</select>
+	
+	<select id="recipeRequestSearch" resultType="com.mid.dto.RecipeRequestDTO">
+		SELECT *
+		FROM RR_LIST_VIEW
+		WHERE RR_TITLE LIKE #{key }
+	</select>
+	
+	<select id="recipeContent" resultType="com.mid.dto.RecipeRequestDTO">
+		SELECT *
+		FROM RR_VIEW
+		WHERE RR_ID = #{rr_id }
+	</select>
+	
+	<update id="recipeRequestInsert" statementType="CALLABLE">
+		{ CALL RECIPE_REQUEST_PRO
+			(
+				#{u_id }
+				, #{inputTitle }
+				, #{inputContent }
+				, 'RRimages/10.jpg'
+				, 15, 15, 6, 1, 2, 1
+				, #{inputPoint }
+			)
+		}
+	</update>
+	
+	<update id="recipeRequestModify">
+		UPDATE RR
+		SET RR_TITLE = #{inputTitle }, RR_CONTENT = #{inputContent }, RR_POINT = #{inputPoint }
+		WHERE RR_ID = #{rr_id }
+	</update>
+	
+	<select id="recipeRequestCommentList" resultType="com.mid.dto.RecipeRequestCommentDTO">
+		SELECT CO.RR_ID, CO.RR_CO_ID, U.U_NICKNAME, U.U_PROFILE_IMG, CO.U_ID, CO.RR_CO_CONTENT, CO.RR_CO_URL, CO.RR_CO_LIKE, CO.RR_CO_DATE
+		FROM RR_CO CO JOIN U
+		ON CO.U_ID = U.U_ID
+		WHERE RR_ID = #{rr_id }
+	</select>
+
+	<select id="recipeRequestCommentCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM RR_CO
+		WHERE RR_ID = #{rr_id }
+	</select>
+	
+	<update id="recipeRequestCommentInsert" statementType="CALLABLE">
+		{ CALL RECIPE_REQUEST_CO_PRO
+			(
+				1
+				, #{rr_id }
+				, #{u_id }
+				, #{rr_co_content}
+				, #{rr_co_url }
+			)
+		}
+	</update>
+	
+	<update id="recipeRequestCommentSelect" statementType="CALLABLE">
+		{ CALL SELECTION_PRO
+			(
+				3
+				, #{rr_co_id }
+			)
+		}
+	</update>
+	
+	<update id="recipeRequestCommentLike">
+		UPDATE RR_CO
+		SET RR_CO_LIKE = RR_CO_LIKE + 1
+		WHERE RR_CO_ID = #{rr_co_id }
+	</update>
+</mapper>

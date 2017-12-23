@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.IUSignInsertDAO">
+
+		<insert id="uSignInsert">
+			INSERT INTO U(U_ID, U_PW, U_NICKNAME, U_EMAIL, U_PHONE, PQ_ID, U_PQ_ANSWER, GRADE_ID, F_ID, STU_ID)
+     		 VALUES(#{u_id}, #{u_pw}, #{u_nickname}, #{u_email}, #{u_phone}, #{pq_id}, #{pq_an}, 1, #{f_id}, 1)
+		</insert>
+
+</mapper>

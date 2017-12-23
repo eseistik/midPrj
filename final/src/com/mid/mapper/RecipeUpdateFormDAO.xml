@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.IRecipeUpdateDAO">
+	
+	<select id="Step" resultType="com.mid.dto.RecipeUpdateFormDTO">
+		SELECT R_STEP_CONTENT, R_STEP_IMG FROM R_STEP WHERE R_ID = #{r_id}
+	</select>
+	
+	
+	<select id="Cl" resultType="com.mid.dto.RecipeUpdateFormDTO">
+		SELECT R_CL_IMG FROM R_CL WHERE R_ID = #{r_id}
+	</select>
+	
+	<select id="Main" resultType="com.mid.dto.RecipeUpdateFormDTO">
+		SELECT R_MAIN_IMG, R_TITLE, R_CONTENT,FD_TYPE_ID, FD_STU_ID, MID_ING_ID, PP_ID, CT_ID, DIF_ID, R_TAG FROM R WHERE R_ID = #{r_id}
+	</select>
+
+		
+	<select id="Mate" resultType="com.mid.dto.RecipeUpdateFormDTO">
+		SELECT BIG_ING_NAME, MID_ING_NAME, R_ING_WEIGHT, UNIT_NAME FROM R_ING_UPVIEW WHERE R_ID = #{r_id}
+	</select>
+	
+	
+	
+</mapper>

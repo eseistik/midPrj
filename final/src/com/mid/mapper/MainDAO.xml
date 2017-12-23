@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.IMainDAO">
+
+		<select id="tRecipe" resultType="com.mid.dto.MainRecipeDTO">
+			SELECT *
+			FROM BEST_FT_VIEW
+		</select>
+
+		<select id="cRecipe" resultType="com.mid.dto.MainRecipeDTO">
+			SELECT *
+			FROM BEST_FC_VIEW
+		</select>
+		
+		<select id="sRecipe" resultType="com.mid.dto.MainRecipeDTO">
+			SELECT *
+			FROM BEST_FS_VIEW		
+		</select>
+
+		<select id="bRecipe" resultType="com.mid.dto.MainRecipeDTO">
+			SELECT *
+			FROM BEST_R_VIEW
+		</select>
+ 
+		<select id="bBRecipe" resultType="com.mid.dto.MainBBRecipeDTO">
+			SELECT *
+			FROM BESTB_VIEW
+		</select>
+
+		<select id="riceRank" resultType="com.mid.dto.MainRankDTO">
+			SELECT *
+			FROM RICE_RANK_VIEW
+		</select>
+
+
+</mapper>

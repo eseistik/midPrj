@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.ILSignInsertDAO">
+
+		<insert id="lSignInsert">
+		INSERT INTO P(P_ID, P_PW, PQ_ID, P_PQ_ANSWER, P_INFO_ID)
+		VALUES(#{p_id},#{p_pw},#{pq_id},#{p_pq_answer}, #{p_info_id})
+		</insert>
+		
+		
+		<insert id="lSignInfoInsert">
+		INSERT INTO P_INFO(P_INFO_ID, BS_ID, P_INFO_NUM, P_INFO_NAME, P_INFO_EMAIL, P_INFO_PHONE, P_INFO_SSN1, P_INFO_SSN2)
+		VALUES(P_INFOSEQ.NEXTVAL, #{bs_id}, #{p_info_num}, #{p_info_name}, #{p_info_email}, #{p_info_phone}, #{p_info_ssn1}, #{p_info_ssn2})
+		</insert>
+
+		<select id="getBs_id" resultType="java.lang.Integer">
+		SELECT BS_ID FROM BS WHERE BS_NAME = #{p_name}
+		</select>
+		
+		<select id="getInfo_id" resultType="java.lang.Integer">
+		SELECT MAX(P_INFO_ID) FROM P_INFO
+		</select>
+
+</mapper>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.IServiceDAO">
+
+	<select id="faqList" resultType="com.mid.dto.FaqDTO">
+		SELECT *
+		FROM FAQ
+	</select>
+	
+	<select id="tmList" resultType="com.mid.dto.TmDTO">
+		SELECT *
+		FROM TM
+	</select>
+
+	<select id="list" resultType="com.mid.dto.ServiceDTO">
+		SELECT QNA.QNA_ID, QNA_TYPE.QNA_TYPE_VAL, QNA.QNA_TITLE, U.U_NICKNAME
+		     , TO_CHAR(QNA.QNA_DATE, 'YYYY-MM-DD') AS QNA_DATE
+		FROM QNA JOIN U
+		ON QNA.U_ID = U.U_ID
+		JOIN QNA_TYPE
+		ON QNA.QNA_TYPE_ID = QNA_TYPE.QNA_TYPE_ID
+		WHERE QNA.BO_STU_ID LIKE 1
+		ORDER BY QNA.QNA_ID DESC
+	</select>
+	
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM QNA
+	</select>
+	
+	<select id="qnaResearch" resultType="com.mid.dto.ServiceDTO">
+		SELECT QNA.QNA_ID, QNA.SE_TYPE_ID, QNA_TYPE.QNA_TYPE_ID, QNA_TYPE.QNA_TYPE_VAL, QNA.QNA_TITLE, U.U_NICKNAME
+		     , QNA.QNA_URL, QNA.QNA_FILE, TO_CHAR(QNA.QNA_DATE, 'YYYY-MM-DD') AS QNA_DATE
+		FROM QNA JOIN U
+		ON QNA.U_ID = U.U_ID
+		JOIN QNA_TYPE
+		ON QNA.QNA_TYPE_ID = QNA_TYPE.QNA_TYPE_ID
+		WHERE QNA_TITLE LIKE #{key }
+	</select>
+	
+	<update id="qnaCommentInsert" statementType="CALLABLE">
+		{ CALL QNA_AN_PRO
+			(
+				11
+				, #{qna_id }
+				, #{qna_an_content }
+			)
+		}
+	</update>
+	
+	<select id="qnaComment" resultType="com.mid.dto.QnaCommentDTO">
+		SELECT *
+		FROM QNA_AN
+		WHERE QNA_ID = #{qna_id }
+	</select>
+	
+	<select id="qnaContentState" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM QNA_AN
+		WHERE QNA_ID = #{qna_id }
+	</select>
+	
+	<select id="qnaTypeList" resultType="com.mid.dto.QnaTypeDTO">
+		SELECT *
+		FROM QNA_TYPE
+	</select>
+	
+	<select id="qnaContent" resultType="com.mid.dto.ServiceDTO">
+		SELECT QNA.QNA_ID, QNA.SE_TYPE_ID, QNA_TYPE.QNA_TYPE_ID, QNA_TYPE.QNA_TYPE_VAL, QNA.QNA_TITLE, QNA.QNA_CONTENT, U.U_NICKNAME
+		     , QNA.QNA_URL, QNA.QNA_FILE, TO_CHAR(QNA.QNA_DATE, 'YYYY-MM-DD') AS QNA_DATE
+		FROM QNA JOIN U
+		ON QNA.U_ID = U.U_ID
+		JOIN QNA_TYPE
+		ON QNA.QNA_TYPE_ID = QNA_TYPE.QNA_TYPE_ID
+		WHERE QNA.QNA_ID = #{qna_id }
+	</select>
+	
+	<insert id="qnaInsert">
+		INSERT INTO QNA(QNA_ID, U_ID, SE_TYPE_ID, QNA_TYPE_ID, QNA_TITLE, QNA_CONTENT, QNA_URL, QNA_FILE, BO_STU_ID)
+		VALUES(QNASEQ.NEXTVAL, #{u_id }, #{se_type_id }, #{qna_type_id }, #{qna_title }, #{qna_content }
+		, #{qna_url }, #{qna_file}, 1)
+	</insert>
+	
+	<update id="qnaModify">
+		UPDATE QNA
+		SET SE_TYPE_ID = #{se_type_id }, QNA_TYPE_ID = #{qna_type_id }, QNA_TITLE = #{qna_title }, QNA_URL = #{qna_url }, QNA_FILE = #{qna_file }
+		WHERE QNA_ID = #{qna_id }
+	</update>
+	
+	<update id="qnaDelete">
+		UPDATE QNA
+		SET BO_STU_ID = 3
+		WHERE QNA_ID = #{qna_id}
+	</update>
+	
+
+</mapper>

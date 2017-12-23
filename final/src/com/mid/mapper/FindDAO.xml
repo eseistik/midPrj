@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.IFindDAO">
+	
+	<select id="ufindInfo" resultType="com.mid.dto.FindDTO">
+		SELECT U_ID AS ID, U_EMAIL AS EMAIL, TO_CHAR(U_DATE, 'YYYY-MM-DD') AS JOINDATE
+		FROM U
+		WHERE U_EMAIL = #{email}
+	</select>
+	
+	<select id="pfindInfo" resultType="com.mid.dto.FindDTO">
+		SELECT P_ID AS ID, P_EMAIL AS EMAIL, TO_CHAR(P_DATE, 'YYYY-MM-DD') AS JOINDATE
+		FROM P
+		WHERE P_EMAIL = #{email}
+	</select>
+	
+	<select id="pqCheck" resultType="com.mid.dto.FindDTO">
+		SELECT PQ_ID, U_PQ_ANSWER
+		FROM U
+		WHERE U_ID = #{id}
+	</select>
+	
+	<update id="pwChange" flushCache="true">
+		UPDATE  U
+		SET U_PW = #{c_pw}
+		WHERE U_ID = #{id}
+	</update>
+
+</mapper>

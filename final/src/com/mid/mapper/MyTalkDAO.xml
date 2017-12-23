@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.IMyTalkDAO">
+
+	<select id="myTalkInfo" resultType="com.mid.dto.MyTalkInfoDTO">
+		SELECT U_ID, U_PROFILE_IMG,
+		U_NICKNAME, U_MESSAGE
+		FROM U
+		WHERE U_ID = #{u_id }
+	</select>
+	
+	<select id="followerCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM FL
+		WHERE FL_U_ID = #{u_id }
+	</select>
+
+	<select id="followingCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM FL
+		WHERE U_ID = #{fl_u_id }
+	</select>
+
+	<select id="myAlertList" resultType="com.mid.dto.MyAlertDTO">
+		SELECT AL.AL_ID,
+		INDEX_TYPE.INDEX_TYPE_VAL, INDEX_TYPE.INDEX_TYPE_ID,
+		TO_CHAR(AL.AL_DATE, 'YYYY-MM-DD HH24:MI:SS') AS AL_DATE
+		FROM AL JOIN
+		IND
+		ON IND.IND_ID = AL.IND_ID
+		JOIN INDEX_TYPE
+		ON INDEX_TYPE.INDEX_TYPE_ID = IND.INDEX_TYPE_ID
+		WHERE U_ID = #{u_id }
+		ORDER BY AL_DATE
+	</select>
+
+	<select id="myRecipeList" resultType="com.mid.dto.RecipeDTO">
+		SELECT *
+		FROM RN_VIEW
+		WHERE
+		U_ID = #{u_id }
+		ORDER BY R_DATE DESC
+	</select>
+
+	<select id="myTalkList" resultType="com.mid.dto.MyTalkDTO">
+		SELECT *
+		FROM T_VIEW
+		WHERE U_ID = #{u_id }
+	</select>
+	
+	<select id="myFollowerList" resultType="com.mid.dto.MyFollowDTO">
+		SELECT FL_ID, U_ID, (SELECT U_NICKNAME FROM U WHERE U_ID = F.U_ID) AS U_NICKNAME  
+  		, FL_U_ID , (SELECT U_NICKNAME FROM U WHERE F.FL_U_ID = U_ID) AS FL_U_NICKNAME
+		FROM FL F 
+		WHERE F.FL_U_ID = #{u_id }
+	</select>
+	
+	<select id="myFollowingList" resultType="com.mid.dto.MyFollowDTO">
+		SELECT FL_ID, U_ID, (SELECT U_NICKNAME FROM U WHERE U_ID = F.U_ID) AS U_NICKNAME  
+		, FL_U_ID , (SELECT U_NICKNAME FROM U WHERE F.FL_U_ID = U_ID) AS FL_U_NICKNAME
+		FROM FL F 
+		WHERE F.U_ID = #{u_id }
+	</select>
+	
+	<insert id="myFollowInsert">
+		INSERT INTO FL(FL_ID, U_ID, FL_U_ID) VALUES(FLSEQ.NEXTVAL, #{id }, #{u_id })
+	</insert>
+	
+</mapper>

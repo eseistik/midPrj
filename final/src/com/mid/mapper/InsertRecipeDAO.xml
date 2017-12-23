@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.InterInsert">
+
+	<select id="recipeSequence" resultType="java.lang.String">
+	SELECT RSEQ.NEXTVAL FROM DUAL
+	</select>
+	
+	<parameterMap type="hashmap" id="groupTextMap">
+      <parameter property="r_id" mode="IN"  jdbcType="INTEGER"   javaType="java.lang.String"/>
+      <parameter property="u_id" mode="IN"  jdbcType="VARCHAR"   javaType="java.lang.String"/>
+      <parameter property="r_title" mode="IN"  jdbcType="VARCHAR"   javaType="java.lang.String"/>
+      <parameter property="r_content" mode="IN"  jdbcType="VARCHAR"   javaType="java.lang.String"/>
+      <parameter property="fd_type_id" mode="IN"  jdbcType="INTEGER"   javaType="java.lang.String"/>
+      <parameter property="fd_stu_id" mode="IN"  jdbcType="INTEGER"   javaType="java.lang.String"/>
+      <parameter property="fd_mid_ing_id" mode="IN"  jdbcType="INTEGER"   javaType="java.lang.String"/>
+      <parameter property="pp_id" mode="IN"  jdbcType="INTEGER"   javaType="java.lang.String"/>
+      <parameter property="ct_id" mode="IN"  jdbcType="INTEGER"   javaType="java.lang.String"/>
+      <parameter property="dif_id" mode="IN"  jdbcType="INTEGER"   javaType="java.lang.String"/>
+      <parameter property="r_main_img" mode="IN"  jdbcType="VARCHAR"   javaType="java.lang.String"/>
+      <parameter property="r_tag" mode="IN"  jdbcType="VARCHAR"   javaType="java.lang.String"/>
+   </parameterMap>
+   
+   <select id="recipeInsert" statementType="CALLABLE" parameterMap="groupTextMap">
+      { call RECIPE_PRO(?, ?, ?, ?,?, ?, ?, ?,?,?, ?, ?) }
+   </select>
+	
+	<insert id="recipeStepInsert">
+	INSERT INTO R_STEP(R_STEP_ID, R_ID, R_STEP_CONTENT, R_STEP_IMG)
+	VALUES(R_STEPSEQ.NEXTVAL, #{r_id}, #{r_step_content}, #{r_step_img})
+	</insert>
+	
+	<insert id="recipeIngInsert">
+	INSERT INTO R_ING(R_ING_ID, R_ID, MID_ING_ID, R_ING_WEIGHT, UNIT_ID)
+	VALUES(R_INGSEQ.NEXTVAL, #{r_id}, #{mid_ing_id}, #{r_ing_weight}, #{unit_id})
+	</insert>
+	
+	<insert id="recipeMidInsert">
+	INSERT INTO MID_ING(MID_ING_ID, MID_ING_NAME, BIG_ING_ID)
+	VALUES(MID_INGSEQ.NEXTVAL, #{mid_ing_name}, #{big_ing_id})
+	</insert>
+	
+	<select id="recipeMid" resultType="java.lang.String">
+	SELECT MID_ING_ID FROM MID_ING WHERE MID_ING_NAME = #{midEmpty}
+	</select>
+	
+	<select id="recipeMidId" resultType="java.lang.String">
+	SELECT MID_ING_ID FROM MID_ING WHERE MID_ING_NAME = #{mid_ing_id}
+	</select>
+	
+	<select id="recipeUnit" resultType="java.lang.String">
+	SELECT UNIT_ID FROM UNIT WHERE UNIT_NAME = #{unit_id}
+	</select>
+	
+	<insert id="recipeEmptyInsert">
+	INSERT INTO R_ING(R_ING_ID, R_ID, MID_ING_ID, R_ING_WEIGHT, UNIT_ID)
+	VALUES(R_INGSEQ.NEXTVAL, #{r_id}, #{mid_ing_id}, #{r_ing_weight}, #{unit_id})
+	</insert>
+	
+	<insert id="recipeClInsert">
+	INSERT INTO R_CL(R_CL_ID, R_ID, R_CL_IMG) VALUES(R_CLSEQ.NEXTVAL, #{r_id}, #{r_cl_img})
+	</insert>
+
+</mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.IBrandUpdateDAO">
+
+	<select id="StepLength" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM B_STEP WHERE B_ID = #{b_id}
+	</select>
+	
+	<select id="MateLength" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM B_ING WHERE B_ID = #{b_id}
+	</select>
+	
+	<select id="ClLength" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM B_CL WHERE B_ID = #{b_id}
+	</select>
+	
+	<select id="StepID" resultType="com.mid.dto.BrandUpdateDTO">
+		SELECT B_STEP_ID FROM B_STEP WHERE B_ID = #{b_id}
+	</select>
+	
+	<select id="MateID" resultType="com.mid.dto.BrandUpdateDTO">
+		SELECT B_ING_ID FROM B_ING WHERE B_ID = #{b_id}
+	</select>
+	
+	<select id="ClID" resultType="com.mid.dto.BrandUpdateDTO">
+		SELECT B_CL_ID FROM B_CL WHERE B_ID = #{b_id}
+	</select>
+	
+	<update id="MainUpdate">
+	UPDATE B
+	SET B_TITLE = #{b_title}, B_CONTENT = #{b_content}, FD_TYPE_ID = #{fd_type_id}, FD_STU_ID = #{fd_stu_id},
+		MID_ING_ID = #{fd_mid_ing_id}, PP_ID = #{pp_id}, CT_ID = #{ct_id}, DIF_ID = #{dif_id}, B_URL = #{b_url}, B_IMG = #{b_img}
+	WHERE B_ID = #{b_id}
+	</update>
+	
+	<update id="StepUpdate">
+		UPDATE B_STEP
+		SET B_STEP_CONTENT = #{b_step_content}, B_STEP_IMG = #{b_step_img}
+		WHERE B_STEP_ID = #{b_step_id} AND B_ID = #{b_id}
+	</update>
+	
+	<update id="MateUpdate">
+		UPDATE B_ING
+		SET MID_ING_ID = #{mid_ing_id}, B_ING_WEIGHT = #{b_ing_weight}, UNIT_ID = #{unit_id}
+		WHERE B_ING_ID = #{b_ing_id} AND B_ID = #{b_id}
+	</update>
+	
+	<update id="ClUpdate">
+		UPDATE B_CL
+		SET B_CL_IMG = #{b_cl_img}
+		WHERE B_CL_ID = #{b_cl_id}  AND B_ID = #{b_id}
+	</update>
+	
+	<update id="DeleteRecipe">
+		UPDATE B
+		SET BO_STU_ID = 2;
+		WHERE B_ID = #{b_id}
+	</update>
+	
+	<delete id="StepDelete">
+		DELETE B_STEP
+		WHERE B_STEP_ID = #{b_step_id} AND B_ID = #{b_id}
+	</delete>
+	
+	<delete id="MateDelete">
+		DELETE B_ING
+		WHERE B_ING_ID = #{b_ing_id} AND B_ID = #{b_id}
+	</delete>
+	
+	<delete id="ClDelete">
+		DELETE B_CL
+		WHERE B_CL_ID = #{b_cl_id} AND B_ID = #{b_id}
+	</delete>
+	
+	
+
+</mapper>

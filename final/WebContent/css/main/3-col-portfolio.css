@@ -1,0 +1,31 @@
+/*!
+ * Start Bootstrap - 3 Col Portfolio (https://startbootstrap.com/template-overviews/3-col-portfolio)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-3-col-portfolio/blob/master/LICENSE)
+ */
+ 
+ body {
+  margin-top: 0;
+ }
+ 
+ .main {
+   margin-top: 0;
+ }
+
+.portfolio-item {
+  margin-bottom: 30px;
+}
+
+.pagination {
+  margin-bottom: 30px;
+}
+
+.rank-body,
+.ad-image {
+  width: 300px;
+  font-size: 8pt;
+  text-align: center;
+  margin: 0 auto;
+  border: 1px;
+
+}

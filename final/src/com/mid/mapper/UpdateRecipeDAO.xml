@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.IRecipeUpdateDAO">
+
+	<select id="StepLength" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM R_STEP WHERE R_ID = #{r_id}
+	</select>
+	
+	<select id="MateLength" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM R_ING WHERE R_ID = #{r_id}
+	</select>
+	
+	<select id="ClLength" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM R_CL WHERE R_ID = #{r_id}
+	</select>
+	
+	<select id="StepID" resultType="com.mid.dto.RecipeUpdateDTO">
+		SELECT R_STEP_ID FROM R_STEP WHERE R_ID = #{r_id}
+	</select>
+	
+	<select id="MateID" resultType="com.mid.dto.RecipeUpdateDTO">
+		SELECT R_ING_ID FROM R_ING WHERE R_ID = #{r_id}
+	</select>
+	
+	<select id="ClID" resultType="com.mid.dto.RecipeUpdateDTO">
+		SELECT R_CL_ID FROM R_CL WHERE R_ID = #{r_id}
+	</select>
+	
+	<update id="MainUpdate">
+	UPDATE R
+	SET R_TITLE = #{r_title}, R_CONTENT = #{r_content}, FD_TYPE_ID = #{fd_type_id}, FD_STU_ID = #{fd_stu_id},
+		MID_ING_ID = #{fd_mid_ing_id}, PP_ID = #{pp_id}, CT_ID = #{ct_id}, DIF_ID = #{dif_id}, R_TAG = #{r_tag}
+	WHERE R_ID = #{r_id}
+	</update>
+	
+	<update id="StepUpdate">
+		UPDATE R_STEP
+		SET R_STEP_CONTENT = #{r_step_content}
+		WHERE R_STEP_ID = #{r_step_id} AND R_ID = #{r_id}
+	</update>
+	
+	<!-- <update id="StepUpdate">
+		UPDATE R_STEP
+		SET R_STEP_CONTENT = #{r_step_content}, R_STEP_IMG = #{r_step_img}
+		WHERE R_STEP_ID = #{r_step_id} AND R_ID = #{r_id}
+	</update> -->
+	
+	<update id="MateUpdate">
+		UPDATE R_ING
+		SET MID_ING_ID = #{mid_ing_id}, R_ING_WEIGHT = #{r_ing_weight}, UNIT_ID = #{unit_id}
+		WHERE R_ING_ID = #{r_ing_id} AND R_ID = #{r_id}
+	</update>
+	
+	<update id="ClUpdate">
+		UPDATE R_CL
+		SET R_CL_IMG = #{r_cl_img}
+		WHERE R_CL_ID = #{r_cl_id}  AND R_ID = #{r_id}
+	</update>
+	
+	<update id="DeleteRecipe">
+		UPDATE R
+		SET BO_STU_ID = 2;
+		WHERE R_ID = #{r_id}
+	</update>
+	
+	<delete id="StepDelete">
+		DELETE R_STEP
+		WHERE R_STEP_ID = #{r_step_id} AND R_ID = #{r_id}
+	</delete>
+	
+	<delete id="MateDelete">
+		DELETE R_ING
+		WHERE R_ING_ID = #{r_ing_id} AND R_ID = #{r_id}
+	</delete>
+	
+	<delete id="ClDelete">
+		DELETE R_CL
+		WHERE R_CL_ID = #{r_cl_id} AND R_ID = #{r_id}
+	</delete>
+	
+	
+
+</mapper>

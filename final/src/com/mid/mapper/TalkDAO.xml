@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.ITalkDAO">
+
+	<select id="talkviewLists" resultType="com.mid.dto.TalkDTO">
+		SELECT *
+		FROM T_VIEW
+		ORDER BY T_DATE DESC
+	</select>
+	<select id="talkcommentCounts" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM
+		T_CO
+		WHERE T_ID = #{t_id }
+	</select>
+	<insert id="talkInsert" statementType="CALLABLE">
+		{ CALL TALK_PRO(#{u_id }, #{t_content }, #{t_img})}
+	</insert>
+	<select id="talkviewContents" resultType="com.mid.dto.TalkDTO">
+		SELECT *
+		FROM T_VIEW
+		WHERE T_ID = #{t_id }
+	</select>
+	<select id="talkviewComments" resultType="com.mid.dto.TalkDTO">
+		SELECT *
+		FROM TCO_VIEW
+		WHERE T_ID = #{t_id}
+	</select>
+	<update id="talkcommentInsert" statementType="CALLABLE">
+	{ CALL TALK_CO_PRO
+		(
+			6
+			, #{t_id }
+			, #{u_id }
+			, #{t_co_content }
+		)
+	}
+	</update>
+	<update id="talkmodifyContent" statementType="CALLABLE">
+	{ CALL TALK_PRO 
+		(
+			#{t_id }
+		  , #{t_content }
+		  , 1
+		)
+	}
+	</update>
+</mapper>

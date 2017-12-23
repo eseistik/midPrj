@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+.container {
+	text-align: center;
+}
+
+.signin-header {
+	margin-bottom: 2%;
+}
+
+.form-horizontal {
+	max-width: 600px;
+	padding: 15px;
+	margin: 0 auto;
+}
+
+.inputText
+{
+	width: 70%;
+	display: inline-block;
+}
+
+.checkBtn
+{
+	width: 28.7%;
+}
+
+#signin-btn 
+{
+	background-color: #ff9b19;
+	color: #FFF;
+	margin-top: 5px;
+}
+
+.labelF
+{
+	margin-right: 10%;
+	margin-left: 2%;
+}
+
+.col-sm-2 {
+	padding: 0px;
+}
+
+.form-group .errId
+{
+	color: red; 
+	font-size: 20px;
+}

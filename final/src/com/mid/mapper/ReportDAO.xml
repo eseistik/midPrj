@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.IReportDAO">
+
+	<select id="reportviewList" resultType="com.mid.dto.ReportDTO">
+		SELECT *
+		FROM RE_TYPE
+	</select>
+
+	<insert id="reportInsert" statementType="CALLABLE">
+		INSERT INTO
+		REPORT(REPORT_ID, U_ID, RE_TYPE_ID, REPORT_U_ID)
+		VALUES(REPORTSEQ.NEXTVAL, #{u_id }, #{re_type_id }, #{report_u_id })
+	</insert>
+
+
+</mapper>

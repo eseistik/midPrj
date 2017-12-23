@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.IRecipeDAO">
+
+	<select id="recipeBest" resultType="com.mid.dto.RecipeDTO">
+		SELECT *
+		FROM BESTW_R_VIEW
+	</select>
+
+	<select id="recipeList" resultType="com.mid.dto.RecipeDTO">
+		SELECT *
+		FROM RN_VIEW
+    	ORDER BY R_DATE DESC
+	</select>
+
+	<select id="recipeCategory" resultType="com.mid.dto.RecipeDTO">
+		SELECT *
+		FROM
+		(
+		SELECT *
+		FROM R JOIN FD_TYPE
+		ON R.FD_TYPE_ID = Fd_Type.Fd_Type_Id
+		JOIN FD_STU
+		ON
+		R.FD_STU_ID = FD_STU.FD_STU_ID
+		WHERE BO_STU_ID LIKE 1
+		) A
+		WHERE A.FD_TYPE_NAME = #{fd_type_name
+		} OR A.FD_STU_NAME = #{fd_stu_name }
+		ORDER BY R_DATE DESC
+	</select>
+
+	<select id="recipeCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM R
+		WHERE BO_STU_ID LIKE 1
+	</select>
+
+	<select id="recipeCategoryCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM
+		(
+		SELECT *
+		FROM R JOIN FD_TYPE
+		ON R.FD_TYPE_ID = Fd_Type.Fd_Type_Id
+		JOIN FD_STU
+		ON R.FD_STU_ID = FD_STU.FD_STU_ID
+		WHERE BO_STU_ID LIKE 1
+		) A
+		WHERE A.FD_TYPE_NAME = #{fd_type_name } OR A.FD_STU_NAME = #{fd_stu_name }
+		ORDER BY R_DATE DESC
+	</select>
+
+	<select id="recipeRate" resultType="com.mid.dto.RecipeDTO">
+		SELECT *
+		FROM RS_VIEW
+	</select>
+
+	<select id="stuCategory" resultType="com.mid.dto.CategoryStateDTO">
+		SELECT *
+		FROM FD_STU
+	</select>
+
+	<select id="typeCategory" resultType="com.mid.dto.CategoryTypeDTO">
+		SELECT *
+		FROM FD_TYPE
+	</select>
+
+	<update id="DeleteRecipe">
+      UPDATE R
+      SET BO_STU_ID = 3
+      WHERE R_ID = #{r_id}
+   </update>
+
+</mapper>

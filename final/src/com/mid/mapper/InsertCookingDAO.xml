@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.dao.InterCookingInsert">
+
+	<select id="cookingSequence" resultType="java.lang.String">
+	SELECT CCSEQ.NEXTVAL FROM DUAL
+	</select>
+	
+	<parameterMap type="hashmap" id="groupTextMap">
+      <parameter property="cc_id" mode="IN"  jdbcType="INTEGER"   javaType="java.lang.String"/>
+      <parameter property="u_id" mode="IN"  jdbcType="VARCHAR"   javaType="java.lang.String"/>
+      <parameter property="cc_title" mode="IN"  jdbcType="VARCHAR"   javaType="java.lang.String"/>
+      <parameter property="cc_img" mode="IN"  jdbcType="VARCHAR"   javaType="java.lang.String"/>
+      
+      <parameter property="cc_content" mode="IN"  jdbcType="VARCHAR"   javaType="java.lang.String"/>
+      <parameter property="sma_ck_id" mode="IN"  jdbcType="INTEGER"   javaType="java.lang.String"/>
+      <parameter property="cc_ck_title" mode="IN"  jdbcType="VARCHAR"   javaType="java.lang.String"/>
+      <parameter property="cc_people" mode="IN"  jdbcType="INTEGER"   javaType="java.lang.String"/>
+      
+      <parameter property="pp_id" mode="IN"  jdbcType="INTEGER"   javaType="java.lang.String"/>
+      <parameter property="ct_id" mode="IN"  jdbcType="INTEGER"   javaType="java.lang.String"/>
+      <parameter property="dif_id" mode="IN"  jdbcType="INTEGER"   javaType="java.lang.String"/>
+      <parameter property="cc_re_start" mode="IN"  jdbcType="DATE"   javaType="java.lang.String"/>
+      
+      <parameter property="cc_re_end" mode="IN"  jdbcType="DATE"   javaType="java.lang.String"/>
+      <parameter property="cc_post_num" mode="IN"  jdbcType="VARCHAR"   javaType="java.lang.String"/>
+      <parameter property="cc_addr" mode="IN"  jdbcType="VARCHAR"   javaType="java.lang.String"/>
+      <parameter property="cc_addr_add" mode="IN"  jdbcType="VARCHAR"   javaType="java.lang.String"/>
+      
+      <parameter property="cc_ck_content" mode="IN"  jdbcType="VARCHAR"   javaType="java.lang.String"/>
+   </parameterMap>
+   
+   <select id="cookingInsert" statementType="CALLABLE" parameterMap="groupTextMap">
+      { call CC_PRO (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }
+   </select>
+
+	
+	<insert id="cookingIngInsert">
+	INSERT INTO CC_ING(CC_ING_ID, CC_ID, MID_ING_ID, CC_ING_WEIGHT, UNIT_ID, CC_ING_PRICE)
+	VALUES(CC_INGSEQ.NEXTVAL, #{cc_id}, #{mid_ing_id}, #{cc_ing_weight}, #{unit_id}, #{cc_ing_price})
+	</insert>
+	
+	<insert id="cookingMidInsert">
+	INSERT INTO MID_ING(MID_ING_ID, MID_ING_NAME, BIG_ING_ID)
+	VALUES(MID_INGSEQ.NEXTVAL, #{mid_ing_name}, #{big_ing_id})
+	</insert>
+	
+	<select id="cookingMid" resultType="java.lang.String">
+	SELECT MID_ING_ID FROM MID_ING WHERE MID_ING_NAME = #{midEmpty}
+	</select>
+	
+	<select id="cookingMidId" resultType="java.lang.String">
+	SELECT MID_ING_ID FROM MID_ING WHERE MID_ING_NAME = #{mid_ing_id}
+	</select>
+	
+	<select id="cookingUnit" resultType="java.lang.String">
+	SELECT UNIT_ID FROM UNIT WHERE UNIT_NAME = #{unit_id}
+	</select>
+	
+	<insert id="cookingEmptyInsert">
+	INSERT INTO CC_ING(CC_ING_ID, CC_ID, MID_ING_ID, CC_ING_WEIGHT, UNIT_ID, CC_ING_PRICE)
+	VALUES(CC_INGSEQ.NEXTVAL, #{cc_id}, #{mid_ing_id}, #{cc_ing_weight}, #{unit_id}, #{cc_ing_price})
+	</insert>
+	
+	
+	<insert id="cookingClInsert">
+	INSERT INTO CC_CL(CC_CL_ID, CC_ID, CC_CL_IMG) VALUES(CC_CLSEQ.NEXTVAL, #{cc_id}, #{cc_cl_img})
+	</insert>
+	
+	<insert id="cookingEtcInsert">
+	INSERT INTO CC_ETC(CC_ETC_ID, CC_ID, CC_ETC_CONTENT, CC_ETC_PRICE) VALUES(CC_ETCSEQ.NEXTVAL,#{cc_id}, #{cc_etc_content}, #{cc_etc_price})
+	</insert>
+	
+	<insert id="cookingTimeInsert">
+	INSERT INTO CC_TIME(CC_TIME_ID, CC_ID, CC_TIME_DATE, CC_TIME_START, CC_TIME_END, CC_TIME_NAME) VALUES(CC_TIMESEQ.NEXTVAL, #{cc_id}, TO_DATE(#{cc_time_date}, 'YYYY-MM-DD'), #{cc_time_start}, #{cc_time_end}, #{cc_time_name})
+	</insert>
+
+</mapper>

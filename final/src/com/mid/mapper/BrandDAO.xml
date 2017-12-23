@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.IBrandDAO">
+
+	<select id="brandBest" resultType="com.mid.dto.BrandDTO">
+		SELECT *
+		FROM BESTW_VIEW
+	</select>
+
+	<select id="brandList" resultType="com.mid.dto.BrandDTO">
+		SELECT *
+		FROM B_LIST_VIEW
+	</select>
+
+	<select id="brandCategory" resultType="com.mid.dto.BrandDTO">
+		SELECT *
+		FROM
+		(
+		SELECT *
+		FROM
+		B JOIN FD_TYPE
+		ON B.FD_TYPE_ID = Fd_Type.Fd_Type_Id
+		JOIN FD_STU
+		ON
+		B.FD_STU_ID = FD_STU.FD_STU_ID
+		) A
+		WHERE A.FD_TYPE_NAME = #{fd_type_name
+		} OR
+		A.FD_STU_NAME = #{fd_stu_name }
+		ORDER BY B_DATE DESC
+	</select>
+
+	<select id="bsCategoryList" resultType="com.mid.dto.BrandDTO">
+		SELECT *
+		FROM B_LIST_VIEW
+		WHERE BS_NAME = #{bs_name }
+	</select>
+
+	<select id="brandCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM B
+	</select>
+
+	<select id="brandCategoryCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM
+		(
+		SELECT *
+		FROM B JOIN FD_TYPE
+		ON B.FD_TYPE_ID = Fd_Type.Fd_Type_Id
+		JOIN
+		FD_STU
+		ON B.FD_STU_ID = FD_STU.FD_STU_ID
+		) A
+		WHERE A.FD_TYPE_NAME =
+		#{fd_type_name } OR A.FD_STU_NAME = #{fd_stu_name }
+		ORDER BY B_DATE
+		DESC
+	</select>
+
+	<select id="bsCategoryCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM B_LIST_VIEW
+		WHERE BS_NAME = #{bs_name }
+	</select>
+
+	<select id="brandRate" resultType="com.mid.dto.BrandDTO">
+		SELECT B_STAR_SCORE, COUNT(*)
+		FROM B_STAR
+		GROUP BY B_STAR_SCORE
+	</select>
+
+	<select id="stuCategory" resultType="com.mid.dto.CategoryStateDTO">
+		SELECT *
+		FROM FD_STU
+	</select>
+
+	<select id="typeCategory" resultType="com.mid.dto.CategoryTypeDTO">
+		SELECT *
+		FROM FD_TYPE
+	</select>
+
+	<select id="bsCategory" resultType="com.mid.dto.CategoryBsDTO">
+		SELECT BS_ID, BS_NAME
+		FROM BS
+	</select>
+
+</mapper>

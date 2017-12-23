@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+.container {
+	text-align: center;
+}
+
+.signin-header {
+	margin-bottom: 2%;
+}
+
+.form-horizontal {
+	max-width: 600px;
+	padding: 15px;
+	margin: 0 auto;
+}
+
+#inputId, #inputNickname {
+	width: 70%;
+	display: inline-block;
+}
+
+#inputCode {
+	width: 100%;
+	display: inline-block;
+}
+
+#checkIdBtn, #checkIdNicknameBtn, #checkCodeBtn, #checkNicknameBtn {
+	width: 28.7%;
+}
+
+#checkCodeBtn {
+	width: 28.7%;
+}
+
+#signin-btn {
+	background-color: #ff9b19;
+	color: #FFF;
+}
+
+#FavorRecipe1, #FavorRecipe2, #FavorRecipe3 {
+	margin-right: 10%;
+	margin-left: 2%;
+}
+
+#list-btn {
+	margin-left: 3%;
+}
+
+h5 {
+	margin-top: 2%;
+	margin-bottom: 3%;
+}

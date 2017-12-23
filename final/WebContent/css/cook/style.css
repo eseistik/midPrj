@@ -1,0 +1,27 @@
+﻿@CHARSET "UTF-8";
+.viewlist-head {
+	font-size: 13pt;
+}
+
+b {
+	color: #ff9b19;
+}
+
+.btn-info {
+	background-color: #ff9b19;
+	border: 1px solid #ff9b19;
+}
+
+.pagination>li>a, .pagination>li>span {
+	border: none;
+	color: black;
+}
+
+.pagination>li>span {
+	border-radius: 5px;
+}
+
+.nav-tabs a {
+	color: #ff9b19;
+}
+

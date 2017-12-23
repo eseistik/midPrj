@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.IStarDAO">
+
+	<select id="starviewList" resultType="com.mid.dto.StarDTO">
+	</select>
+
+	<insert id="starInsert" statementType="CALLABLE">
+		{ CALL RECIPE_STAR_PRO
+			(
+				  #{r_id }
+				, #{u_id }
+				, #{taste }
+				, #{simple }
+				, #{creative }
+			)
+		}
+	</insert>
+	<insert id="BstarInsert" statementType="CALLABLE">
+		{ CALL BRAND_STAR_PRO
+			(
+				  #{b_id }
+				, #{u_id }
+				, #{b_star_score }
+			)
+		}
+	</insert>
+	
+
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.IEventDAO">
+
+	<select id="list" resultType="com.mid.dto.EventDTO">
+		SELECT EVENT_ID, EVENT_TITLE_IMG, EVENT_STU_VAL
+		     , EVENT_TITLE, EVENT_START, EVENT_END 
+		FROM EVENT_LIST_VIEW 
+		WHERE SYSDATE BETWEEN EVENT_START AND EVENT_END
+	</select>
+
+	<select id="content" resultType="com.mid.dto.EventDTO">
+		SELECT EVENT_ID,EVENT_MAIN_IMG, EVENT_CONTENT
+		     , EVENT_SUB_IMG, EVENT_URL 
+		FROM EVENT
+		WHERE  EVENT_ID = #{event_id}
+	</select>
+	
+	<select id="endlist" resultType="com.mid.dto.EventDTO">
+		SELECT EVENT_ID, EVENT_TITLE_IMG, EVENT_STU_VAL
+		     , EVENT_TITLE, EVENT_START, EVENT_END 
+		FROM EVENT_LIST_VIEW 
+		WHERE SYSDATE > EVENT_END
+	</select>
+	
+	<select id="endcontent" resultType="com.mid.dto.EventDTO">
+		SELECT EVENT_ID,EVENT_MAIN_IMG, EVENT_CONTENT
+		     , EVENT_SUB_IMG 
+		FROM EVENT
+		WHERE  EVENT_ID = #{event_id}
+	</select>
+	
+	<select id="bdname" resultType="java.lang.String">
+		SELECT BS_NAME
+		FROM P_INFO JOIN P
+		ON P_INFO.P_INFO_ID = P.P_INFO_ID
+		JOIN BS
+		ON P_INFO.BS_ID = BS.BS_ID
+		WHERE P_ID = #{p_id}
+	</select>	
+</mapper>

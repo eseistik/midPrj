@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.IBrandContentDAO">
+
+	<select id="brandContent" resultType="com.mid.dto.BrandDTO">
+		SELECT *
+		FROM B_VIEW
+		WHERE
+		B_ID = #{b_id }
+	</select>
+
+	<select id="brandStar" resultType="com.mid.dto.BrandStarScoreDTO">
+		SELECT TRUNC(B_STAR_SCORE, 0) AS B_STAR_SCORE, COUNT(*) AS COUNT
+		FROM (SELECT * FROM B_STAR WHERE B_ID = #{b_id })BS
+		GROUP BY B_STAR_SCORE
+		ORDER BY B_STAR_SCORE DESC
+	</select>
+
+	<select id="brandStarJoin" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM B_STAR
+		WHERE B_ID = #{b_id }
+	</select>
+
+	<select id="brandIng" resultType="com.mid.dto.BrandIngDTO">
+		SELECT B_ING_ID,
+		MID_ING.MID_ING_NAME, B_ING.B_ING_WEIGHT, UNIT.UNIT_NAME, B_ING.B_ID
+		FROM B_ING JOIN MID_ING
+		ON MID_ING.MID_ING_ID = B_ING.MID_ING_ID
+		JOIN
+		UNIT
+		ON UNIT.UNIT_ID = B_ING.UNIT_ID
+		WHERE B_ID = #{b_id }
+	</select>
+
+	<select id="brandStep" resultType="com.mid.dto.BrandStepDTO">
+		SELECT *
+		FROM B_STEP
+		WHERE B_ID
+		= #{b_id }
+		ORDER BY B_STEP_ID
+	</select>
+
+	<select id="brandPicture" resultType="com.mid.dto.BrandPicDTO">
+		SELECT *
+		FROM B_CL
+		WHERE B_ID = #{b_id }
+	</select>
+
+</mapper>

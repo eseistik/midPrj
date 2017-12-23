@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.IBrandUpdateDAO">
+	
+	<select id="Step" resultType="com.mid.dto.BrandUpdateDTO">
+		SELECT B_STEP_CONTENT, B_STEP_IMG FROM B_STEP WHERE B_ID = #{b_id}
+	</select>
+	
+	
+	<select id="Cl" resultType="com.mid.dto.BrandUpdateDTO">
+		SELECT B_CL_IMG FROM B_CL WHERE B_ID = #{b_id}
+	</select>
+	
+	<select id="Main" resultType="com.mid.dto.BrandUpdateDTO">
+		SELECT B_MAIN_IMG, B_TITLE, B_CONTENT,FD_TYPE_ID, FD_STU_ID, MID_ING_ID, PP_ID, CT_ID, DIF_ID, B_URL, B_IMG FROM B WHERE B_ID = #{b_id}
+	</select>
+
+		
+	<select id="Mate" resultType="com.mid.dto.BrandUpdateDTO">
+		SELECT BIG_ING_NAME, MID_ING_NAME, B_ING_WEIGHT, UNIT_NAME FROM B_ING_UPVIEW WHERE B_ID = #{b_id}
+	</select>
+	
+	
+	
+</mapper>

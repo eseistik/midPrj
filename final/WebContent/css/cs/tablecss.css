@@ -1,0 +1,70 @@
+div.greyGridTable {
+	border: 1px solid #EEEEEE;
+	width: 100%;
+	text-align: left;
+	border-collapse: collapse;
+}
+
+.divTable.greyGridTable .divTableCell, .divTable.greyGridTable .divTableHead
+	{
+	border: 1px solid #EEEEEE;
+	padding: 9px 9px;
+	text-align: center;
+}
+
+.divTable.greyGridTable .divTableBody .divTableCell {
+	font-size: 13px;
+	text-align: center;
+}
+
+.divTable.greyGridTable .divTableRow:nth-child(even) {
+	background: #FFF5E7;
+}
+
+.divTable.greyGridTable .divTableHeading {
+	background: #FFFFFF;
+	border-bottom: 0px solid #333333;
+}
+
+.divTable.greyGridTable .divTableHeading .divTableHead {
+	font-size: 13px;
+	font-weight: bold;
+	color: #333333;
+	border-left: 0px solid #333333;
+}
+
+.divTable.greyGridTable .divTableHeading .divTableHead:first-child {
+	border-left: none;
+}
+
+.greyGridTable .tableFootStyle {
+	font-size: 14px;
+}
+/* DivTable.com */
+.divTable {
+	display: table;
+}
+
+.divTableRow {
+	display: table-row;
+}
+
+.divTableHeading {
+	display: table-header-group;
+}
+
+.divTableCell, .divTableHead {
+	display: table-cell;
+}
+
+.divTableHeading {
+	display: table-header-group;
+}
+
+.divTableFoot {
+	display: table-footer-group;
+}
+
+.divTableBody {
+	display: table-row-group;
+}

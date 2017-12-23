@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.InterInsertForm">
+	<select id="selectMingLists" resultType="com.mid.dto.InsertFormDTO">
+		select mid_ing_id , mid_ing_name from mid_ing where big_ing_id = #{big_ing_id}
+	</select>
+	
+	<select id="mingLists" resultType="com.mid.dto.InsertFormDTO">
+		select mid_ing_id , mid_ing_name from mid_ing
+	</select>
+	
+	<select id="bingLists" resultType="com.mid.dto.InsertFormDTO">
+		SELECT BIG_ING_ID, BIG_ING_NAME FROM BIG_ING
+	</select>
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+	<select id="stuLists" resultType="com.mid.dto.InsertFormDTO">
+		SELECT FD_STU_ID, FD_STU_NAME FROM FD_STU
+	</select>
+	
+	<select id="typeLists" resultType="com.mid.dto.InsertFormDTO">
+		SELECT FD_TYPE_ID, FD_TYPE_NAME FROM FD_TYPE
+	</select>
+	
+	<select id="ppLists" resultType="com.mid.dto.InsertFormDTO">
+		SELECT PP_ID, PP_NAME FROM PP
+	</select>
+	
+	<select id="ctLists" resultType="com.mid.dto.InsertFormDTO">
+		SELECT CT_ID, CT_NAME FROM CT
+	</select>
+	
+	<select id="difLists" resultType="com.mid.dto.InsertFormDTO">
+		SELECT DIF_ID, DIF_NAME FROM DIF
+	</select>
+	
+	<select id="unitLists" resultType="com.mid.dto.InsertFormDTO">
+		SELECT UNIT_ID, UNIT_NAME FROM UNIT
+	</select>
+	
+	<select id="bcLists" resultType="com.mid.dto.InsertFormDTO">
+		SELECT BIG_CK_ID, BIG_CK_NAME FROM BIG_CK
+	</select>
+	
+	<select id="mcLists" resultType="com.mid.dto.InsertFormDTO">
+		SELECT MID_CK_ID, MID_CK_NAME FROM MID_CK
+	</select>
+	
+	<select id="scLists" resultType="com.mid.dto.InsertFormDTO">
+		SELECT SMA_CK_ID, SMA_CK_NAME FROM SMA_CK
+	</select>
+	
+
+	
+	
+	
+</mapper>

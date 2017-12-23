@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.ICookingClassDAO">
+
+	<select id="countCooking" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM CC_LIST_VIEW
+	</select>
+	
+	<select id="countCookingEnd" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM CC_LIST_VIEW
+		WHERE SYSDATE &gt; CC_RE_END
+	</select>
+	
+	<select  id="list" resultType="com.mid.dto.CookingClassDTO">
+		SELECT *
+		FROM COOKING
+	</select>
+	
+	<select id="cookingClassContent" resultType="com.mid.dto.CookingClassDTO">
+		SELECT *
+		FROM CC_LIST_VIEW
+		WHERE CC_ID = #{cc_id}
+	</select>
+
+	<select id="reCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM CC_RE
+		WHERE CC_ID = #{cc_id}
+	</select>
+
+	<select id="ingPrice" resultType="java.lang.Integer">
+		SELECT NVL(SUM(CC_ING_PRICE), 0) AS INGPRICE
+		FROM CC_ING
+		WHERE CC_ID = #{cc_id}
+	</select>
+	
+	<select id="etcPrice" resultType="java.lang.Integer">
+		SELECT NVL(SUM(CC_ETC_PRICE), 0) AS ETCPRICE
+		FROM CC_ETC
+		WHERE CC_ID = #{cc_id}
+	</select>
+
+	<select id="timeList" resultType="com.mid.dto.CookingClassDTO">
+		SELECT ROWNUM AS CC_TIME_NUM, CC_ID, TO_CHAR(CC_TIME_DATE, 'YYYY-MM-DD') AS CC_TIME_DATE , CC_TIME_START, CC_TIME_NAME
+		FROM CC_TIME
+		WHERE CC_ID = #{cc_id}
+	</select>
+	
+	<select id="ingList" resultType="com.mid.dto.CookingClassDTO">
+		SELECT MID_ING_NAME, CC_ING_PRICE, CC_ING.CC_ING_WEIGHT, UNIT.UNIT_NAME
+		FROM CC_ING JOIN MID_ING
+		ON MID_ING.MID_ING_ID = CC_ING.MID_ING_ID
+		JOIN UNIT
+		ON UNIT.UNIT_ID = CC_ING.UNIT_ID
+		WHERE CC_ID = #{cc_id}
+	</select>
+	
+	<select id="etcList" resultType="com.mid.dto.CookingClassDTO">
+		SELECT *
+		FROM CC_ETC
+		WHERE CC_ID = #{cc_id}
+	</select>
+	
+	<select id="clList" resultType="com.mid.dto.CookingClassDTO">
+		SELECT *
+		FROM CC_CL
+		WHERE CC_ID = #{cc_id}
+	</select>
+
+	<select id="coList" resultType="com.mid.dto.CookingClassCoDTO">
+		SELECT CC_CO.CC_CO_ID, U.U_PROFILE_IMG, GRADE.GRADE_IMG, U.U_NICKNAME, CC_CO.CC_CO_DATE, CC_CO.CC_CO_CONTENT
+		FROM CC_CO JOIN U
+		ON U.U_ID = CC_CO.U_ID
+		JOIN GRADE
+		ON U.GRADE_ID = GRADE.GRADE_ID
+		WHERE CC_ID = #{cc_id}
+	</select>
+
+	<select id="replyCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM CC_REPLY
+		WHERE CC_CO_ID = 1;
+	</select>
+
+</mapper>

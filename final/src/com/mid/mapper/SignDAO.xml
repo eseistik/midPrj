@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.ISignDAO">
+
+	<select id="pqList" resultType="com.mid.dto.SignDTO">
+		SELECT *
+		FROM PQ
+	</select>
+
+	<select id="fList" resultType="com.mid.dto.SignDTO">
+		SELECT *
+		FROM F
+	</select>
+	
+	<select id="uCheckId" resultType="int">
+		SELECT COUNT(*) FROM U WHERE U_ID = #{u_id}
+	</select>
+	
+	<select id="uCheckNick" resultType="int">
+		SELECT COUNT(*) FROM U WHERE U_NICKNAME = #{u_nickname}
+	</select>
+
+</mapper>

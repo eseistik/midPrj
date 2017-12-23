@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mid.inter.IMyDAO">
+	<select id="myInfo" resultType="com.mid.dto.MyInfoDTO">
+		SELECT *
+		FROM U_VIEW
+		WHERE U_ID = #{u_id }
+	</select>
+	
+	<update id="myInfoUpdate">
+		UPDATE U
+		SET U_PW = #{u_pw }, U_NICKNAME = #{u_nickname }, PQ_ID = #{pq_id }, U_PQ_ANSWER = #{u_pq_answer }, F_ID = #{f_id }
+		WHERE U_ID = #{u_id }
+	</update>
+	
+	<update id="myInfoDrop">
+		UPDATE U 
+		SET STU_ID = 3
+		WHERE U_ID = #{u_id }
+	</update>
+
+	<select id="qList" resultType="com.mid.dto.QuestionDTO">
+		SELECT *
+		FROM PQ
+	</select>
+	
+	<select id="nicknameList" resultType="java.util.ArrayList">
+		SELECT U_NICKNAME
+		FROM U
+	</select>
+	
+	<select id="myCookingclassList" resultType="com.mid.dto.MyCookingclassDTO">
+		SELECT *
+		FROM 
+		(
+		SELECT  A.CC_ID, A.CC_RE_NUM, A.CC_TITLE, B.CC_ADDR, B.CC_ADDR_ADD, MAX(B.CC_TIME_DATE) AS MAX, MIN(B.CC_TIME_DATE) AS MIN
+		FROM
+		(
+		SELECT CC.CC_ID, CC_RE.CC_RE_NUM, CC_RE.U_ID, CC.CC_TITLE
+		FROM CC JOIN CC_RE
+		ON CC_RE.CC_ID = CC.CC_ID 
+		WHERE CC_RE.U_ID = #{u_id }
+		) A JOIN (SELECT CC.CC_ID, CC.CC_ADDR, CC.CC_ADDR_ADD, CC_TIME.CC_TIME_DATE
+		FROM CC JOIN CC_TIME
+		ON CC_TIME.CC_ID= CC.CC_ID) B
+		ON A.CC_ID = B.CC_ID
+		GROUP BY A.CC_ID, CC_RE_NUM, A.CC_TITLE, B.CC_ADDR, B.CC_ADDR_ADD
+		)
+		WHERE MIN &gt; SYSDATE
+	</select>
+	
+	<select id="myCookingclassEndList" resultType="com.mid.dto.MyCookingclassDTO">
+		SELECT CC_ID, CC_RE_NUM, CC_TITLE, MAX, MIN
+		FROM
+		(
+		  SELECT A.CC_ID, A.CC_RE_NUM, A.CC_TITLE, TO_CHAR(MAX(CC_TIME.CC_TIME_DATE), 'YYYY-MM-DD') AS MAX, TO_CHAR(MIN(CC_TIME.CC_TIME_DATE), 'YYYY-MM-DD') AS MIN
+		  FROM 
+		    (
+		      SELECT CC.CC_ID, CC_RE.CC_RE_NUM, CC.CC_TITLE
+		      FROM U JOIN CC_RE
+		      ON U.U_ID = CC_RE.U_ID
+		      JOIN CC
+		      ON CC_RE.CC_ID = CC.CC_ID
+		      WHERE U.U_ID = #{u_id }
+		    ) A JOIN CC_TIME
+		  ON CC_TIME.CC_ID = A.CC_ID
+		  GROUP BY A.CC_ID, A.CC_RE_NUM, A.CC_TITLE
+		)
+		WHERE SYSDATE &gt; MAX
+	</select>
+	
+	<select id="myCookingclassEndCourceList" resultType="com.mid.dto.MyCookingclassDTO">
+		SELECT A.CC_ID, A.CC_TITLE, B.COUNT || '/' || A.CC_PEOPLE AS PEOPLE
+		FROM 
+		(SELECT  CC.CC_ID, CC.CC_TITLE, CC.CC_PEOPLE, TO_CHAR(MAX(CC_TIME.CC_TIME_DATE), 'YYYY-MM-DD') AS MAX
+		FROM CC JOIN CC_RE
+		ON CC_RE.CC_ID = CC.CC_ID
+		JOIN CC_TIME
+		ON CC_TIME.CC_ID = CC.CC_ID
+		WHERE CC.U_ID = #{u_id }
+		GROUP BY CC.CC_ID, CC.CC_TITLE, CC.CC_PEOPLE
+		) A JOIN (SELECT CC_ID, COUNT(*) AS COUNT
+		          FROM CC_RE
+		          GROUP BY CC_ID
+		          ) B
+		ON A.CC_ID = B.CC_ID
+		WHERE SYSDATE &gt; A.MAX
+	</select>
+	
+	<select id="myCookingclassTime" resultType="com.mid.dto.MyCookingclassTimeDTO">
+		SELECT CC.CC_ID, CC_TIME.CC_TIME_DATE, CC_TIME.CC_TIME_START, CC_TIME.CC_TIME_END, CC.CC_ADDR, U.U_PHONE, CC.CC_PEOPLE, CC_TIME.CC_TIME_NAME, CC.CC_ADDR_ADD
+		FROM CC_TIME JOIN CC
+		ON CC_TIME.CC_ID = CC.CC_ID
+		JOIN U
+		ON U.U_ID = CC.U_ID
+		WHERE U.U_ID = #{u_id } AND CC.CC_ID = #{cc_id }
+	</select>
+	
+	<select id="myCookingTime"  resultType="com.mid.dto.MyCookingclassTimeDTO">
+		SELECT CC.CC_ID, CC_TIME.CC_TIME_DATE, CC_TIME.CC_TIME_START, CC_TIME.CC_TIME_END, CC.CC_ADDR, U.U_PHONE, CC.CC_PEOPLE, CC_TIME.CC_TIME_NAME, CC.CC_ADDR_ADD
+		FROM CC_TIME JOIN CC
+		ON CC_TIME.CC_ID = CC.CC_ID
+		JOIN U
+		ON U.U_ID = CC.U_ID
+		WHERE CC.CC_ID = ${cc_id }
+	</select>
+	
+	<select id="myCookingclassCourceList" resultType="com.mid.dto.MyCookingclassDTO">
+		SELECT A.CC_ID, A.CC_TITLE, B.COUNT || '/' || A.CC_PEOPLE AS PEOPLE
+		FROM 
+		(SELECT  CC.CC_ID, CC.CC_TITLE, CC.CC_PEOPLE, TO_CHAR(MAX(CC_TIME.CC_TIME_DATE), 'YYYY-MM-DD') AS MAX
+		FROM CC JOIN CC_RE
+		ON CC_RE.CC_ID = CC.CC_ID
+		JOIN CC_TIME
+		ON CC_TIME.CC_ID = CC.CC_ID
+		WHERE CC.U_ID = #{u_id }
+		GROUP BY CC.CC_ID, CC.CC_TITLE, CC.CC_PEOPLE
+		) A JOIN (SELECT CC_ID, COUNT(*) AS COUNT
+		          FROM CC_RE
+		          GROUP BY CC_ID
+		          ) B
+		ON A.CC_ID = B.CC_ID
+		WHERE SYSDATE &lt; A.MAX
+	</select>
+	
+	<select id="myPointList" resultType="com.mid.dto.MyPointDTO">
+		SELECT ROWNUM, RICE_STU.RICE_STU_VAL, RICE_USE.RICE_USE_VAL, RICE.RICE_POINT, TO_CHAR(RICE.RICE_DATE, 'YYYY-MM-DD') AS RICE_DATE
+		FROM RICE JOIN RICE_USE
+		ON RICE_USE.RICE_USE_ID = RICE.RICE_USE_ID
+		JOIN RICE_STU
+		ON  RICE_STU.RICE_STU_ID = RICE.RICE_STU_ID
+		WHERE RICE.U_ID = #{u_id }
+		ORDER BY ROWNUM DESC
+	</select>
+	
+	<select id="myBannerList" resultType="com.mid.dto.MyBannerDTO">
+		SELECT *
+		FROM AD_RE
+		WHERE P_ID = #{u_id } AND AD_RE_START &lt; SYSDATE AND AD_RE_END &gt; SYSDATE
+	</select>
+	
+	<select id="myReservationBannerList" resultType="com.mid.dto.MyBannerDTO">
+		SELECT *
+		FROM AD_RE
+		WHERE P_ID = #{u_id } AND AD_RE_START &gt; SYSDATE
+	</select>
+	
+	<select id="myEndBannerList" resultType="com.mid.dto.MyBannerDTO">
+		SELECT *
+		FROM AD_RE
+		WHERE P_ID = #{u_id } AND AD_RE_END &lt; SYSDATE
+	</select>
+
+</mapper>

@@ -1,0 +1,64 @@
+﻿@CHARSET "UTF-8";
+
+.viewlist-head {
+	font-size: 13pt;
+}
+
+b {
+	color: #ff9b19;
+}
+
+.btn-info {
+	background-color: #ff9b19;
+	border: 1px solid #ff9b19;
+}
+
+.pagination>li>a, .pagination>li>span {
+	border: none;
+	color: black;
+}
+
+.pagination>li>span {
+	border-radius: 5px;
+}
+
+.nav-tabs a {
+	color: #ff9b19;
+}
+
+.thumbnail>.caption {
+	text-decoration: none;
+}
+
+p {
+	font-size: 9pt;
+}
+
+.img-circle {
+	width: 100px;
+}
+
+.thumbnail>.caption {
+	text-decoration: none;
+}
+
+p {
+	font-size: 9pt;
+}
+
+.img-circle {
+	width: 100px;
+}
+
+.row .img-rounded {
+	width: 575px;
+}
+
+.summary>a {
+	text-decoration: none;
+}
+
+.myhome_main {
+	padding: 5%;
+	margin-top: 10%;
+}
